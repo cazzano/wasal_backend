@@ -5,5 +5,9 @@ sendgrid
 python-dotenv
 requests
 flask 
-psutil 
+#psutil 
 requests
+cors
+python-magic
+flask_cors
+gunicorn
