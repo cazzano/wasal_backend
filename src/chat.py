@@ -30,11 +30,21 @@ from apis.chat.send_friend_request import send_friend_request
 from apis.chat.get_friend_requests import get_friend_requests
 from apis.chat.get_friends import get_friends
 from apis.chat.respond_friend_request import respond_friend_request
+from modules.auth_app.get_user_from_db import get_user_from_database
+from modules.auth_app.token_reguired import token_required
+from modules.auth_app.verify_user_credentials import verify_user_credentials
+from apis.auth_app.login_jwt import login_jwt
+from modules.registration.automatically_make_user_id import get_next_user_id
+from modules.registration.init_db import init_db
+from apis.registration.get_all_users import get_whole_users
+from apis.registration.get_specific_user import get_specific_user
+from apis.registration.signup import signup_login
 
 # Configuration
 CHAT_DATABASE = 'chat.db'
-USER_API_URL = 'http://localhost:5000'  # User registration API URL
-AUTH_API_URL = 'http://localhost:3000'  # Authentication API URL
+DATABASE = 'users.db'
+#USER_API_URL = 'http://localhost:5000'  # User registration API URL
+#AUTH_API_URL = 'http://localhost:3000'  # Authentication API URL
 JWT_SECRET_KEY = 'your-secret-key-change-this-in-production'  # Should match auth_app.py
 
 # Blueprints
@@ -52,7 +62,13 @@ app.register_blueprint(send_friend_request)
 app.register_blueprint(get_friend_requests)
 app.register_blueprint(get_friends)
 app.register_blueprint(respond_friend_request)
+app.register_blueprint(login_jwt)
+app.register_blueprint(get_whole_users)
+app.register_blueprint(get_specific_user)
+app.register_blueprint(signup_login)
 
+# Secret key for JWT encoding/decoding (in production, use environment variable)
+app.config['SECRET_KEY'] = 'your-secret-key-change-this-in-production'
 
 # Utility endpoints
 
@@ -127,6 +143,7 @@ def internal_error(error):
 if __name__ == '__main__':
     # Initialize the chat database
     init_chat_db()
+    init_db()
     print("Chat database initialized successfully!")
     
     # Run the Flask application
