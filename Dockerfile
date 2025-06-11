@@ -23,7 +23,7 @@ RUN /app/venv/bin/pip install --no-cache-dir -r requirements.txt;
 COPY src/ .
 
 # Expose port 2000
-EXPOSE 2000
+EXPOSE $PORT
 
 # Run the application with gunicorn
-CMD ["/app/venv/bin/gunicorn", "--bind", "0.0.0.0:2000", "wsgi:application"]
+CMD ["/app/venv/bin/gunicorn", "--bind", "0.0.0.0:$PORT", "wsgi:application"]
