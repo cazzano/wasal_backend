@@ -26,4 +26,4 @@ COPY src/ .
 EXPOSE 2000
 
 # Run the application with gunicorn
-CMD ["/app/venv/bin/gunicorn", "--bind", "0.0.0.0:2000", "wsgi_chat:application"]
+CMD ["/app/venv/bin/gunicorn", "--bind", "0.0.0.0:2000", "wsgi:application"]
